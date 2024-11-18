@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int value) {
+        data = value;
+        next = NULL;
+    }
+};
+
+class Queue {
+private:
+    Node* front;
+    Node* rear;
+
+public:
+    Queue() { front = rear = NULL; }
+
+    bool isEmpty() { return front == NULL; }
+
+    void enqueue(int element) {
+        Node* temp = new Node(element);
+        if (rear == NULL) {
+            front = rear = temp;
+            cout << "Inserted " << element << endl;
+            return;
+        }
+        rear->next = temp;
+        rear = temp;
+        cout << "Inserted " << element << endl;
+    }
+
+    int dequeue() {
+        if (isEmpty()) {
+            cout << "Queue is empty" << endl;
+            return -1;
+        }
+        Node* temp = front;
+        int element = front->data;
+        front = front->next;
+        if (front == NULL) rear = NULL;
+        delete temp;
+        cout << "Deleted " << element << endl;
+        return element;
+    }
+
+    void display() {
+        if (isEmpty()) {
+            cout << "Queue is empty" << endl;
+            return;
+        }
+        Node* temp = front;
+        cout << "Items: ";
+        while (temp != NULL) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    Queue q;
+    q.enqueue(1);
+    q.enqueue(2);
+    q.enqueue(3);
+    q.enqueue(4);
+    q.enqueue(5);
+    q.display();
+    q.dequeue();
+    q.dequeue();
+    q.display();
+    return 0;
+}
